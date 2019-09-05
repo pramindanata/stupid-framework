@@ -13,6 +13,9 @@ class Response
   // JSON
   private $jsonData;
 
+  // Text
+  private $textData;
+
   /**
    * Return view
    *
@@ -38,6 +41,19 @@ class Response
   public function json(array $data) {
     $this->type = 'json';
     $this->jsonData = json_encode($data);
+
+    return $this;
+  }
+
+  /**
+   * Return text
+   *
+   * @param String $text
+   * @return Response
+   */
+  public function text($text) {
+    $this->type = 'text';
+    $this->textData = $text;
 
     return $this;
   }
@@ -70,6 +86,10 @@ class Response
     echo $this->jsonData;
   }
 
+  private function handleText() {
+    echo $this->textData;
+  }
+
   private function handleStatus() {
     echo getHttpCodeMessage($this->statusCode);
   }
@@ -81,6 +101,8 @@ class Response
       $this->handleView();
     } else if ($this->type === 'json') {
       $this->handleJson();
+    } else if ($this->type === 'text') {
+      $this->handleText();
     } else {
       $this->handleStatus();
     }
