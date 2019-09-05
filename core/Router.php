@@ -22,6 +22,10 @@ class Router
     $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
   }
 
+  function run() {
+    $this->resolve();
+  }
+
   /**
    * Removes trailing forward slashes from the right of the route.
    * @param route (string)
@@ -50,7 +54,7 @@ class Router
   /**
    * Resolves a route
    */
-  function resolve() {
+  private function resolve() {
     $methodDictionary = $this->{strtolower($this->request->requestMethod)};
     $formatedRoute = $this->formatRoute($this->request->requestUri);
 
@@ -62,10 +66,6 @@ class Router
 
     $method = $methodDictionary[$formatedRoute];
 
-    echo call_user_func_array($method, array($this->request));
-  }
-
-  function __destruct() {
-    $this->resolve();
+    return call_user_func_array($method, array($this->request));
   }
 }

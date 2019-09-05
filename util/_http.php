@@ -34,6 +34,7 @@ function getHttpCodeMessage($code)
     case 413: $text = 'Request Entity Too Large'; break;
     case 414: $text = 'Request-URI Too Large'; break;
     case 415: $text = 'Unsupported Media Type'; break;
+    case 422: $text = 'Unprocessable Entity'; break;
     case 500: $text = 'Internal Server Error'; break;
     case 501: $text = 'Not Implemented'; break;
     case 502: $text = 'Bad Gateway'; break;
@@ -41,9 +42,13 @@ function getHttpCodeMessage($code)
     case 504: $text = 'Gateway Time-out'; break;
     case 505: $text = 'HTTP Version not supported'; break;
     default:
-        exit('Unknown http status code "' . htmlentities($code) . '"');
+      throw new \Exception('Unknown http status code "' . htmlentities($code) . '"');
     break;
   }
 
   return $text;
+}
+
+function httpResponseCode($code) {
+  header('HTTP/1.1 ' . $code . ' ' . getHttpCodeMessage($code), true, $code);
 }

@@ -41,11 +41,11 @@ class Error
         $code = 500;
       }
 
-      header('HTTP/1.1 ' . $code . ' ' . getHttpCodeMessage($code), true, $code);
+      httpResponseCode($code);
 
-      echo "<h1>Fatal error</h1>";
-      echo "<p>Uncaught exception: '" . get_class($exception) . "'</p>";
-      echo "<p>Message: '" . $exception->getMessage() . "'</p>";
+      echo "<h1 style='color:red;'>Fatal error</h1>";
+      echo "<p>Uncaught exception: <strong>'" . get_class($exception) . "'</strong></p>";
+      echo "<p>Message: <strong>'" . $exception->getMessage() . "'</strong></p>";
       echo "<p>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
       echo "<p>Thrown in '" . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
   }

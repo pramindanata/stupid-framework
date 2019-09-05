@@ -34,11 +34,11 @@ class Request implements RequestInterface
     return $result;
   }
 
-  public function addPayload(string $key, array $value) {
+  public function addPayload($key, array $value) {
     $this->payload[$key] = $value;
   }
 
-  public function getPayload(string $key = null) {
+  public function getPayload($key = null) {
    if ($key === null) {
      return $this->payload;
    }
