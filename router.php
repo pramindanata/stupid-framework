@@ -1,7 +1,4 @@
 <?php
-include_once 'core/Request.php';
-include_once 'core/Router.php';
-
 use Core\Router;
 use Core\Request;
 

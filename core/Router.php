@@ -1,6 +1,5 @@
 <?php
 namespace Core;
-include_once '../core/interface/RequestInterface.php';
 
 use Core\I\RequestInterface;
 
