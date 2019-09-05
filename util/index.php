@@ -1,6 +1,8 @@
 <?php
 
+require_once '_config.php';
 require_once '_http.php';
+require_once '_response.php';
 
 function dd($data) {
   header('Content-Type: application/json');
@@ -13,6 +15,7 @@ function dd($data) {
     'greet' => 'This is DD mode',
     'dd_data' => $data
   ));
+
   die();
 }
 

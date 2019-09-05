@@ -1,14 +1,11 @@
 <?php
 use Core\Router;
 use Core\Request;
-use Core\Response;
 
 $router = new Router(new Request);
 
 $router->get('/', function() {
-  $response = new Response();
-
-  return $response
+  return response()
     ->view('home.index', array(
       'name' => 'Eksa'
     ))
@@ -16,21 +13,18 @@ $router->get('/', function() {
 });
 
 $router->get('/profile', function($request) {
-  $response = new Response();
-
-  return $response->view('profile');
+  return response()->view('profile');
 });
 
 $router->get('/test', function($request) {
-  $response = new Response();
+  $db = config('db.host');
 
-  return $response->status(401);
+  return response()->text($db);
 });
 
 $router->post('/', function($request) {
-  $response = new Response();
-
-  return $response->json($request->getBody())
+  return response()
+    ->json($request->getBody())
     ->status(422);
 });
 
