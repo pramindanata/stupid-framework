@@ -87,7 +87,7 @@ class Response
     
     httpResponseCode($this->statusCode);
 
-    return 1;
+    return $this;
   }
 
   function __destruct() {

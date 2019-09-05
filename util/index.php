@@ -5,6 +5,10 @@ require_once '_http.php';
 function dd($data) {
   header('Content-Type: application/json');
 
+  if (is_object($data)) {
+    $data = serialize($data);
+  }
+
   echo json_encode(array(
     'greet' => 'This is DD mode',
     'dd_data' => $data

@@ -1,6 +1,7 @@
 <?php
 namespace Core;
 
+use Core\Response;
 use Core\I\RequestInterface;
 
 class Router
@@ -23,7 +24,13 @@ class Router
   }
 
   function run() {
-    $this->resolve();
+    $response = $this->resolve();
+
+    if (!($response instanceof Response)) {
+      $route = $this->request->requestMethod . ' ' . $this->request->requestUri;
+
+      throw new \Exception('Reponse of "' . $route . '" must be instance of Core\Response !');
+    }
   }
 
   /**
