@@ -10,7 +10,7 @@ class Request implements RequestInterface
    * Store additional request data here.
    * Ex: auth
    */ 
-  private $payload = [];
+  private $payload = array();
 
   function __construct() {
     $this->bootstrapSelf();
@@ -49,7 +49,7 @@ class Request implements RequestInterface
 
   public function getParams() {
     if (isset($this->queryString)) {
-      $result = [];
+      $result = array();
 
       parse_str($this->queryString, $result);
 
@@ -67,7 +67,7 @@ class Request implements RequestInterface
     }
 
     if ($this->requestMethod === 'POST') {
-      $body = [];
+      $body = array();
       
       foreach ($_POST as $key => $value) {
         $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);

@@ -23,6 +23,6 @@ $router->get('/test', function($request) {
   return responseJson($request->getParams());
 });
 
-$router->post('/data', function($request) {
+$router->post('/', function($request) {
   return responseJson($request->getBody());
 });

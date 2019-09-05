@@ -7,10 +7,10 @@ use Core\I\RequestInterface;
 class Router
 {
   private $request;
-  private $supportedHttpMethods = ['GET', 'POST'];
+  private $supportedHttpMethods = array('GET', 'POST');
 
   function __construct(RequestInterface $request) {
-   $this->request = $request;
+    $this->request = $request;
   }
 
   function __call($name, $args) {
@@ -19,7 +19,7 @@ class Router
     if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
       $this->invalidMethodHandler();
     }
-
+    
     $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
   }
 
@@ -29,13 +29,13 @@ class Router
    */
   private function formatRoute($route) {
     // Trim and split query string 
-    $result = explode('?', rtrim($route, '/'))[0];
+    $result = explode('?', rtrim($route, '/'));
 
-    if ($result === '') {
+    if ($result[0] === '') {
       return '/';
     }
 
-    return $result;
+    return $result[0];
   }
 
   private function invalidMethodHandler() {
