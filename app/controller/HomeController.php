@@ -2,12 +2,14 @@
 namespace App\Controller;
 
 use Core\Request;
+use App\Middleware\CheckDemo;
 
 class HomeController {
-  public function index() {
+  public function index(Request $request) {
     return response()
       ->view('home.index', array(
-        'name' => 'Eksa'
+        'name' => 'Eksa',
+        'demo' => $request->getPayload('demo')
       ));
   }
 

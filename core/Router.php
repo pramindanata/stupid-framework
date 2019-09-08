@@ -8,16 +8,19 @@ class Router
 {
   private $request;
   private $controllerNameSpace = 'App\Controller\\';
+  private $middlewareNameSpace = 'App\Middleware\\';
   private $supportedHttpMethods = array('GET', 'POST', 'PUT', 'DELETE', 'PATCH');
 
   function __construct(RequestInterface $request) {
     $this->request = $request;
   }
 
+  // Register listed route
   // $name: called method name, ex: get, post
   // $args: method args, ex: closure or controller str
   function __call($name, $args) {
-    list($route, $handler) = $args;
+    $type = 'closure';
+    list($route, $middlewares, $handler) = $args;
 
     if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
       $this->invalidMethodHandler();
@@ -26,6 +29,7 @@ class Router
     // Handler can be  a string or a closure 
     if (is_string($handler)) {
       // If a string, then it will be treat as controller
+      $type = 'controller';
       $controllerStrArr = explode('@', $handler);
       $controllerClassName = $controllerStrArr[0];
       $controllerMethodName = $controllerStrArr[1];
@@ -37,7 +41,11 @@ class Router
     }
 
     // Register route with its handler.
-    $this->{strtolower($name)}[$this->formatRoute($route)] = $handler;
+    $this->{strtolower($name)}[$this->formatRoute($route)] = array(
+      'type' => $type,
+      'payload' => $handler,
+      'middlewares' => $middlewares
+    );
   }
 
   function run() {
@@ -77,6 +85,29 @@ class Router
     die();
   }
 
+  private function continueMiddleware(Request $request) {
+    $this->request = $request;
+
+    return true;
+  }
+  
+  private function resolveMiddlewares(Array $middlewares) {
+    foreach ($middlewares as $className) {
+      $requestState = null;
+      $fullClassName = $this->middlewareNameSpace . $className;
+      $middleware = new $fullClassName();
+
+      $next = $middleware->handle($this->request, function () {
+        return true;
+      });
+      
+      if ($next !== true) {
+        // Stop request
+        die();
+      }
+    }
+  }
+
   /**
    * Resolves a route
    */
@@ -96,13 +127,18 @@ class Router
     }
 
     $handler = $methodDictionary[$formatedRoute];
+    $payload = $handler['payload'];
 
-    if ($handler instanceof \Closure) {
-      return call_user_func_array($handler, array($this->request));
+    if ($handler['middlewares'] != null) {
+      $this->resolveMiddlewares($handler['middlewares']);
+    }
+
+    if ($handler['type'] === 'closure') {
+      return call_user_func_array($payload, array($this->request));
     } else {
       // Init controller class
-      $controllerObj = new $handler['class']();
-      return $controllerObj->{$handler['method']}($this->request);
+      $controllerObj = new $payload['class']();
+      return $controllerObj->{$payload['method']}($this->request);
     }
   }
 }

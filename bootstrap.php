@@ -9,6 +9,7 @@ $loader = new Autoloader();
 
 $loader->register();
 $loader->addNamespace('App\Controller', __DIR__ . '/app/controller');
+$loader->addNamespace('App\Middleware', __DIR__ . '/app/middleware');
 $loader->addNamespace('Core', __DIR__ . '/core');
 $loader->addNamespace('Core\I', __DIR__ . '/core/interface');
 

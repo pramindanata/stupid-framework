@@ -34,7 +34,7 @@ class Request implements RequestInterface
     return $result;
   }
 
-  public function addPayload($key, array $value) {
+  public function addPayload($key, $value) {
     $this->payload[$key] = $value;
   }
 
@@ -43,7 +43,7 @@ class Request implements RequestInterface
      return $this->payload;
    }
 
-   return $this->payload[$key];
+   return isset($this->payload[$key]) ? $this->payload[$key] : null;
   }
 
   public function getParams() {
