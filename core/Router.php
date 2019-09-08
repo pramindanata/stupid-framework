@@ -81,9 +81,9 @@ class Router
    * Resolves a route
    */
   private function resolve() {
-    // if (!isset($this->{strtolower($this->request->requestMethod)})) {
-    //   return $this->defaultRequestHandler();
-    // }
+    if (!isset($this->{strtolower($this->request->requestMethod)})) {
+      return $this->defaultRequestHandler();
+    }
 
     $methodDictionary = $this->{strtolower($this->request->requestMethod)};
     $formatedRoute = $this->formatRoute($this->request->requestUri);
