@@ -7,20 +7,37 @@ use Core\I\RequestInterface;
 class Router
 {
   private $request;
-  private $supportedHttpMethods = array('GET', 'POST');
+  private $controllerNameSpace = 'App\Controller\\';
+  private $supportedHttpMethods = array('GET', 'POST', 'PUT', 'DELETE', 'PATCH');
 
   function __construct(RequestInterface $request) {
     $this->request = $request;
   }
 
+  // $name: called method name, ex: get, post
+  // $args: method args, ex: closure or controller str
   function __call($name, $args) {
-    list($route, $method) = $args;
+    list($route, $handler) = $args;
 
     if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
       $this->invalidMethodHandler();
     }
-    
-    $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
+
+    // Handler can be  a string or a closure 
+    if (is_string($handler)) {
+      // If a string, then it will be treat as controller
+      $controllerStrArr = explode('@', $handler);
+      $controllerClassName = $controllerStrArr[0];
+      $controllerMethodName = $controllerStrArr[1];
+
+      $handler = array(
+        'class' => $this->controllerNameSpace . $controllerClassName,
+        'method' => $controllerMethodName
+      );
+    }
+
+    // Register route with its handler.
+    $this->{strtolower($name)}[$this->formatRoute($route)] = $handler;
   }
 
   function run() {
@@ -65,14 +82,21 @@ class Router
     $methodDictionary = $this->{strtolower($this->request->requestMethod)};
     $formatedRoute = $this->formatRoute($this->request->requestUri);
 
+    // Find route by targeted URI and http method
     if(!array_key_exists($formatedRoute, $methodDictionary)) {
       $this->defaultRequestHandler();
       
       return;
     }
 
-    $method = $methodDictionary[$formatedRoute];
+    $handler = $methodDictionary[$formatedRoute];
 
-    return call_user_func_array($method, array($this->request));
+    if ($handler instanceof \Closure) {
+      return call_user_func_array($handler, array($this->request));
+    } else {
+      // Init controller class
+      $controllerObj = new $handler['class']();
+      return $controllerObj->{$handler['method']}($this->request);
+    }
   }
 }

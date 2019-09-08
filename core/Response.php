@@ -77,7 +77,7 @@ class Response
   private function handleView() {
     $data = $this->viewData;
       
-    require_once __DIR__ . '/../view/' . $this->viewFilePath;
+    require_once config('root_path') . '/view/' . $this->viewFilePath;
   }
 
   private function handleJson() {
