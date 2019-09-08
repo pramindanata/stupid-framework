@@ -4,7 +4,7 @@ use Core\Request;
 
 $router = new Router(new Request);
 
-$router->get('/', array('CheckDemo'), 'HomeController@index');
+$router->get('/', array('Auth', 'CheckDemo'), 'HomeController@index');
 $router->post('/', null, 'HomeController@store');
 
 $router->get('/profile', null, function($request) {

@@ -102,7 +102,7 @@ class Router
       });
       
       if ($next !== true) {
-        // Stop request
+        // Stop the request
         die();
       }
     }
