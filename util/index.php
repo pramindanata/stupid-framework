@@ -2,6 +2,7 @@
 
 require_once '_config.php';
 require_once '_http.php';
+require_once '_component.php';
 require_once '_response.php';
 
 function dd($data) {
@@ -17,10 +18,4 @@ function dd($data) {
   ));
 
   die();
-}
-
-function responseJson($data) {
-  header('Content-Type: application/json');
-
-  return json_encode($data);
 }
