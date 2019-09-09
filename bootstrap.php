@@ -1,13 +1,14 @@
 <?php
+session_start();
+
 require_once 'core/Autoloader.php';
 
 use Core\Autoloader;
-use Core\Request;
-use Core\Error;
 
 $loader = new Autoloader();
 
 $loader->register();
+$loader->addNamespace('App', __DIR__ . '/app');
 $loader->addNamespace('App\Controller', __DIR__ . '/app/controller');
 $loader->addNamespace('App\Middleware', __DIR__ . '/app/middleware');
 $loader->addNamespace('Core', __DIR__ . '/core');
@@ -18,4 +19,4 @@ require_once 'util/index.php';
 set_error_handler('Core\Error::errorHandler');
 set_exception_handler('Core\Error::exceptionHandler');
 
-require_once 'route.php';
+require_once 'app.php';

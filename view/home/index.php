@@ -7,10 +7,10 @@
   <title>Test</title>
 </head>
 <body>
-  <h1>Hi <?php echo $data['name'] ?></h1>
+  <h1>Hi <?php echo user('username') ?></h1>
 
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt corporis provident, velit pariatur harum ut rem saepe temporibus reprehenderit dicta! Dicta quibusdam sunt blanditiis officia soluta tempora, perferendis culpa ut!</p>
 
-  <p>Middleware data: <?php echo $data['demo'] ?></p>
+  <?php part('component.logout') ?>
 </body>
 </html>

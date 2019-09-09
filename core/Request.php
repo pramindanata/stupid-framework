@@ -43,7 +43,7 @@ class Request implements RequestInterface
      return $this->payload;
    }
 
-   return isset($this->payload[$key]) ? $this->payload[$key] : null;
+   return $this->payload[$key];
   }
 
   public function getParams() {

@@ -52,3 +52,9 @@ function getHttpCodeMessage($code)
 function httpResponseCode($code) {
   header('HTTP/1.1 ' . $code . ' ' . getHttpCodeMessage($code), true, $code);
 }
+
+function route($route) {
+  if ($route === '/') $route = '';
+
+  return config('app_url') . '/' . $route;
+}

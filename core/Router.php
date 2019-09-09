@@ -2,11 +2,12 @@
 namespace Core;
 
 use Core\Response;
+use Core\I\RouterMiddleware;
 use Core\I\RequestInterface;
 
 class Router
 {
-  private $request;
+  public $request;
   private $controllerNameSpace = 'App\Controller\\';
   private $middlewareNameSpace = 'App\Middleware\\';
   private $supportedHttpMethods = array('GET', 'POST', 'PUT', 'DELETE', 'PATCH');
@@ -48,6 +49,9 @@ class Router
     );
   }
 
+  /**
+   * Run the request
+   */
   function run() {
     $response = $this->resolve();
 
@@ -55,6 +59,23 @@ class Router
       $route = $this->request->requestMethod . ' ' . $this->request->requestUri;
 
       throw new \Exception('Reponse of "' . $route . '" must be instance of Core\Response !');
+    }
+  }
+
+  /**
+   * Apply router level middleware. Use case ex: check session
+   *
+   * @param RouterMiddleware $extension
+   * @return void
+   */
+  function apply(RouterMiddleware $middleware) {
+    $next = $middleware->handle($this, function () {
+      return true;
+    });
+    
+    if ($next !== true) {
+      // Stop the request
+      die();
     }
   }
 
@@ -84,14 +105,8 @@ class Router
       
     die();
   }
-
-  private function continueMiddleware(Request $request) {
-    $this->request = $request;
-
-    return true;
-  }
   
-  private function resolveMiddlewares(Array $middlewares) {
+  private function resolveRouteMiddleware(Array $middlewares) {
     foreach ($middlewares as $className) {
       $requestState = null;
       $fullClassName = $this->middlewareNameSpace . $className;
@@ -130,7 +145,7 @@ class Router
     $payload = $handler['payload'];
 
     if ($handler['middlewares'] != null) {
-      $this->resolveMiddlewares($handler['middlewares']);
+      $this->resolveRouteMiddleware($handler['middlewares']);
     }
 
     if ($handler['type'] === 'closure') {

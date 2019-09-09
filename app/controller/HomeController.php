@@ -9,7 +9,7 @@ class HomeController {
     return response()
       ->view('home.index', array(
         'name' => 'Eksa',
-        'demo' => $request->getPayload('demo')
+        // 'demo' => $request->getPayload('demo')
       ));
   }
 

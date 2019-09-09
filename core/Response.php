@@ -74,10 +74,25 @@ class Response
     return $this;
   }
 
+  /**
+   * Redirect request
+   *
+   * @param String $route
+   * @return void
+   */
+  public function redirect($route) {
+    // Immediately redirect
+    $url = route($route);
+
+    header('location:' . $url);
+
+    die();
+  }
+
   private function handleView() {
     $data = $this->viewData;
       
-    require_once config('root_path') . '/view/' . $this->viewFilePath;
+    require_once config('path.root') . '/view/' . $this->viewFilePath;
   }
 
   private function handleJson() {

@@ -3,7 +3,11 @@
 return array(
   'mode' => 'development',
   'debug' => true,
-  'root_path' => __DIR__,
+  'app_url' => 'http://localhost',
+  'path' => array(
+    'root' => __DIR__,
+    'view' => __DIR__ . '/view'
+  ),
   'db' => array(
     'host' => 'localhost',
     'name' => 'stupid',
