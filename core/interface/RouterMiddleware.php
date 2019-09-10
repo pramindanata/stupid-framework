@@ -1,6 +1,8 @@
 <?php
 namespace Core\I;
+
+use Core\Router;
   
 interface RouterMiddleware {
-  public function handle($router, $next);
+  public function handle(Router $router, $next);
 }

@@ -8,6 +8,8 @@ use Core\Autoloader;
 $loader = new Autoloader();
 
 $loader->register();
+
+// Register all class here.
 $loader->addNamespace('App', __DIR__ . '/app');
 $loader->addNamespace('App\Controller', __DIR__ . '/app/controller');
 $loader->addNamespace('App\Middleware', __DIR__ . '/app/middleware');

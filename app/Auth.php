@@ -1,10 +1,11 @@
 <?php
 namespace App;
 
+use Core\Router;
 use Core\I\RouterMiddleware;
 
 class Auth implements RouterMiddleware {
-  public function handle($router, $next) {
+  public function handle(Router $router, $next) {
     if (isset($_SESSION['user']['id'])) {
       $user = $_SESSION['user'];
       $router->auth = array(
