@@ -71,7 +71,7 @@ config('db.name'); // Akan mengambil nilai dari db => name
 
 Untuk menyusun definisi routing dari aplikasi bisa dilakukan di dalam file `/app.php`. Contoh sederhana:
 
-⚠️ Sistem routing belum mendukung parameter di dalam URL seperti: `/path/{id}`.
+:warning: Sistem routing belum mendukung parameter di dalam URL seperti: `/path/{id}`.
 
 ```php
 // Panggil class Router dan Request
@@ -213,7 +213,7 @@ echo $request->requestUri;
 
 Selain mengakses data `$_SERVER` anda juga bisa mengakses payload $_POST dan $_GET serta menambah payload lain ke objek `$request`.
 
-⚠️ Hanya `form data` yang didukung oleh `$request->getBody()`.
+:warning: Hanya `form data` yang didukung oleh `$request->getBody()`.
 
 ```php
 // Akses payload $_POST
@@ -236,7 +236,7 @@ echo $request->getPayload('user') // Jeff
 
 Terdapat beberapa jenis response yang bisa diberikan kepada client dengan cara mengakses objek dari `Core\Response` yakni:
 
-ℹ️ Supaya lebih mudah gunakan helper `response()`.
+:information_source: Supaya lebih mudah gunakan helper `response()`.
 
 1. JSON
 
