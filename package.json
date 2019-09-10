@@ -1,0 +1,31 @@
+{
+  "name": "stupid-mvc",
+  "version": "1.0.0",
+  "description": "Stupid Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pramindanata/stupid-php-mvc.git"
+  },
+  "author": "Eksa Pramindanata",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pramindanata/stupid-php-mvc/issues"
+  },
+  "homepage": "https://github.com/pramindanata/stupid-php-mvc#readme",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier": "^1.18.2"
+  }
+}
