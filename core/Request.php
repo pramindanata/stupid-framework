@@ -8,7 +8,7 @@ class Request implements RequestInterface
   /**
    * Store additional request data here.
    * Ex: auth
-   */ 
+   */
   private $payload = array();
 
   function __construct() {
@@ -67,7 +67,7 @@ class Request implements RequestInterface
 
     if ($this->requestMethod === 'POST') {
       $body = array();
-      
+
       foreach ($_POST as $key => $value) {
         $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
       }

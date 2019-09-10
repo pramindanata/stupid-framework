@@ -21,7 +21,7 @@ class Response
    *
    * @param String $fileName
    * @param Array $data
-   * 
+   *
    * @return Response
    */
   public function view($fileName, array $data = array()) {
@@ -91,13 +91,13 @@ class Response
 
   private function handleView() {
     $data = $this->viewData;
-      
+
     require_once config('path.root') . '/view/' . $this->viewFilePath;
   }
 
   private function handleJson() {
     header('Content-Type: application/json');
-      
+
     echo $this->jsonData;
   }
 
@@ -121,7 +121,7 @@ class Response
     } else {
       $this->handleStatus();
     }
-    
+
     httpResponseCode($this->statusCode);
 
     return $this;

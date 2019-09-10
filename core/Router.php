@@ -27,7 +27,7 @@ class Router
       $this->invalidMethodHandler();
     }
 
-    // Handler can be  a string or a closure 
+    // Handler can be  a string or a closure
     if (is_string($handler)) {
       // If a string, then it will be treat as controller
       $type = 'controller';
@@ -72,7 +72,7 @@ class Router
     $next = $middleware->handle($this, function () {
       return true;
     });
-    
+
     if ($next !== true) {
       // Stop the request
       die();
@@ -84,7 +84,7 @@ class Router
    * @param route (string)
    */
   private function formatRoute($route) {
-    // Trim and split query string 
+    // Trim and split query string
     $result = explode('?', rtrim($route, '/'));
 
     if ($result[0] === '') {
@@ -102,10 +102,10 @@ class Router
     header("{$this->request->serverProtocol} 404 Not Found");
 
     echo 'Not Found';
-      
+
     die();
   }
-  
+
   private function resolveRouteMiddleware(Array $middlewares) {
     foreach ($middlewares as $className) {
       $requestState = null;
@@ -115,7 +115,7 @@ class Router
       $next = $middleware->handle($this->request, function () {
         return true;
       });
-      
+
       if ($next !== true) {
         // Stop the request
         die();
@@ -137,7 +137,7 @@ class Router
     // Find route by targeted URI and http method
     if(!array_key_exists($formatedRoute, $methodDictionary)) {
       $this->defaultRequestHandler();
-      
+
       return;
     }
 
