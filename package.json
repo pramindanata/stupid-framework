@@ -2,10 +2,10 @@
   "name": "stupid-mvc",
   "version": "1.0.0",
   "description": "Stupid Framework",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,12 @@
   },
   "homepage": "https://github.com/pramindanata/stupid-php-mvc#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "autoprefixer": "^9.6.1",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-config-standard": "^14.1.0",
@@ -26,6 +32,12 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "prettier": "^1.18.2"
+    "mini-css-extract-plugin": "^0.8.0",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.18.2",
+    "sass": "^1.22.0",
+    "sass-loader": "^8.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
   }
 }
