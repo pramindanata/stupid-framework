@@ -171,7 +171,12 @@ Middleware didefinisikan di masing-masing route. Contoh:
 
     ```php
     $router->get('/book', array('CheckSomething'), /** Handler **/);
+
+    // Beberapa middleware
+    $router->post('/book', array('Auth', 'CheckSomething'), /** Handler **/);
     ```
+
+    Middleware akan diproses dari yang paling kiri.
 
 #### Router Level Middleware
 
@@ -196,15 +201,156 @@ $router->apply(new CheckSomething());
 
 ### Request
 
+Semua data `$_SERVER` bisa diakses melalui objek `Core\Request` yang diinisialisasi dari class `'Core\Router`. Contoh:
+
+```php
+echo $_SERVER['REQUEST_URI'];
+
+// Menggunakan objek Core\Request
+// Semua key diubah menjadi camelCase
+echo $request->requestUri;
+```
+
+Selain mengakses data `$_SERVER` anda juga bisa mengakses payload $_POST dan $_GET serta menambah payload lain ke objek `$request`.
+
+⚠️ Hanya `form data` yang didukung oleh `$request->getBody()`.
+
+```php
+// Akses payload $_POST
+$post = $request->getBody();
+
+// Akses payload $_GET
+$get = $request->getParams();
+// ?name=Jeff&age=21
+echo $get['name']; // Jeff
+
+// Menambah custom payload
+$request->addPayload('user', 'Jeff');
+
+// Mengakses custom payload
+// Kosongkan argumen jika ingin mengambil semua payload
+echo $request->getPayload('user') // Jeff
+```
+
 ### Response
+
+Terdapat beberapa jenis response yang bisa diberikan kepada client dengan cara mengakses objek dari `Core\Response` yakni:
+
+ℹ️ Supaya lebih mudah gunakan helper `response()`.
+
+1. JSON
+
+    ```php
+    return response()->json($array);
+    ```
+
+2. View
+
+    ```php
+    return response()->view('path.to.file');
+    ```
+
+3. Text
+
+    ```php
+    return response()->text('Lorem ipsum...');
+    ```
+
+4. Status
+
+    ```php
+    return response()->status(403);
+    ```
+  
+5. Redirect
+
+    ```php
+    return response()->redirect('/other/route');
+    ```
+
+    Kode status dari response JSON, view, dan text bisa dimanipulasi dengan cara:
+
+    ```php
+    // Contoh untuk JSON
+    return response()->json($data)->status($code);
+    ```
 
 ### View
 
-#### Basic
+View merupakan tampilan HTML yang akan diberikan kepada client. Semua file view diletakan di folder `/view` dengan menggunakan ekstensi `.php`. Untuk memanggil view pastikan route handler melakukan hal seperti berikut:
+
+```php
+return response()->view('path.to.file');
+```
+
+String `path.to.file` akan dirubah menjadi `<path_to_view>/path/to/file.php` oleh framework.
+
+Untuk mengoper data ke dalam view anda bisa melakukan hal seperti berikut:
+
+```php
+$payload = array(
+  'title' => 'Stupid MVC',
+  'content' => 'Lorem ipsum....'
+);
+
+return response()->view('path.to.file', $payload);
+```
+
+Kemudian untuk mengaksesnya anda bisa gunakan variabel `$data`:
+
+```html
+<h1><?= $data['title'] ?></h1>
+<p><?= $data['content'] ?></p>
+```
 
 #### Component
 
+Anda juga bisa memperlakukan file view sebagai komponen. Gunakan helper `part()` untuk memanggil komponen.
+
+```html
+<!-- Card Component (/view/component/card) -->
+<div>
+  <h4>Epic Moment</h4>
+  <p>Lorem ipsum...</p>
+</div>
+```
+
+```html
+<!-- Base view -->
+<div>
+  <?php part('component.card') ?>
+  <?php part('component.card') ?>
+  <?php part('component.card') ?>
+<div>
+```
+
+Anda juga bisa mengoper data ke dalam komponen. Akses data tersebut dengan menggunakan variabel `$data`.
+
+```html
+<!-- Card Component (/view/component/card) -->
+<div>
+  <h4><?php echo $data['title'] ?></h4>
+  <p><?php echo $data['desc'] ?></p>
+</div>
+```
+
+```html
+<!-- Base view -->
+<?php
+  $article = array(
+    'title' => 'Epic Moment',
+    'desc' => 'Lorem ipsum...',
+  );
+?>
+
+<div>
+  <?php part('component.card', $article) ?>
+<div>
+```
+
 ### Helper
+
+Secara default semua fungsi helper bisa diakses secara global. Untuk helper apa saja yang disediakan bisa mengecek di dalam folder `/util`. Anda juga bisa menambahkan custom helper asalkan fungsi tersebut berada di atau di require ke dalam file `/util/index.php`.
 
 ### Other
 
