@@ -1,13 +1,27 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WebpackBar = require('webpackbar')
 
 module.exports = {
   entry: {
     app: `./src/js/app.js`
   },
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'public/js')
+    filename: 'js/[name].js',
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/'
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
   },
   module: {
     rules: [
@@ -44,8 +58,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new WebpackBar(),
     new MiniCssExtractPlugin({
-      filename: '../css/app.css'
+      filename: 'css/app.css',
+      chunkFilename: 'css/app.css' // Disable chunk ID, ex: 0.app.css
     })
   ]
 }
