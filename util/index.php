@@ -1,6 +1,7 @@
 <?php
 
 require_once '_config.php';
+require_once '_asset.php';
 require_once '_http.php';
 require_once '_component.php';
 require_once '_user.php';

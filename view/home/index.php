@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test</title>
-  <link rel="stylesheet" href="http://localhost:8080/css/app.css">
+  <link rel="stylesheet" href="<?php echo asset('/css/app.css') ?>">
 </head>
 <body>
   <h1>Hi <?php echo user('username') ?></h1>
@@ -14,6 +14,6 @@
 
   <?php part('component.logout') ?>
 
-  <script src="http://localhost:8080/js/app.js"></script>
+  <script src="<?php echo asset('/js/app.js') ?>"></script>
 </body>
 </html>
