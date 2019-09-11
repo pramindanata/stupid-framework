@@ -6,6 +6,7 @@ Simple MVC framework with a routing system (?). No Composer (Thanks STIKOM).
 
 - [Requirement](#requirement)
 - [Development](#development)
+- [Production](#production)
 - [Folder/File Structure](#folder-file-structure)
 - [How To Use](#how-to-use)
   - [Configuration](#configuration)
@@ -31,7 +32,14 @@ Simple MVC framework with a routing system (?). No Composer (Thanks STIKOM).
 ## Development
 
 1. Atur `config.php`.
-1. Jalankan `localhost/path/to/public` di browser anda. Atau lebih baik atur web server agar langsung menarget folder `public`, jadi nanti tinggal akses `localhost` saja.
+2. Jalankan `npm run dev` untuk meng-compile aset dan menjalankan Webpack Dev Server.
+3. Jalankan `localhost/path/to/public` di browser anda. Atau lebih baik atur web server agar langsung menarget folder `public`, jadi nanti tinggal akses `localhost` saja.
+
+## Production
+
+1. Jalankan `npm run build` untuk meng-compile aset.
+2. Copy semua file dan folder kecuali `node_modules` dan file konfigurasi JS (Eslint, Prettier, dll).
+3. Pastikan web server mengarah ke folder `public`.
 
 ## Folder/File Structure
 
