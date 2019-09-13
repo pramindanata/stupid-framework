@@ -82,7 +82,15 @@ class Response
    */
   public function redirect($route) {
     // Immediately redirect
-    $url = route($route);
+    $url = null;
+    $parsedUrl = parse_url($route);
+
+    if (isset($parsedUrl['scheme']) && ($parsedUrl['scheme'] === 'http' || $parsedUrl['scheme' === 'https'])) {
+      $url = $route;
+    } else {
+      $url = route($route);
+    }
+
 
     header('location:' . $url);
 
