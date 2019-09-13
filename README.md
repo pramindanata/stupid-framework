@@ -1,6 +1,6 @@
-# Stupid MVC
+# Stupid Framework
 
-Simple MVC framework with a routing system (?). No Composer (Thanks STIKOM).
+Simple framework with a routing system (?). No Composer (Thanks STIKOM).
 
 ## Table Of Content
 
