@@ -4,7 +4,7 @@ namespace Core;
 class Response
 {
   private $type = null;
-  private $statusCode = 200;
+  public $statusCode = 200;
 
   // View
   private $viewFilePath;
@@ -129,8 +129,6 @@ class Response
     } else {
       $this->handleStatus();
     }
-
-    httpResponseCode($this->statusCode);
 
     return $this;
   }

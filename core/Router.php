@@ -60,6 +60,8 @@ class Router
 
       throw new \Exception('Reponse of "' . $route . '" must be instance of Core\Response !');
     }
+
+    httpResponseCode($response->statusCode);
   }
 
   /**
