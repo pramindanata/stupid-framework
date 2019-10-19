@@ -1,6 +1,6 @@
 # Stupid Framework
 
-Simple framework with a routing system (?). No Composer (Thanks STIKOM).
+Simple framework with a routing system. No Composer.
 
 ## Table Of Content
 
@@ -26,7 +26,7 @@ Simple framework with a routing system (?). No Composer (Thanks STIKOM).
 
 ## Requirement
 
-1. PHP == 5.3 (Thanks again STIKOM)
+1. PHP == 5.3.
 2. Node JS (latest (but LTS) better) for compiling assets.
 
 ## Development
